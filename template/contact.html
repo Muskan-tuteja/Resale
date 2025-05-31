@@ -1,0 +1,142 @@
+{% extends "base.html"%}
+{% load static %}
+{% block head %}
+<style>
+.submit {
+    text-decoration: none;
+    color: #fff;
+    font-size: 17px;
+    background-color: #f3c500 !important;
+    padding: 10px 20px;
+	width:200px;outline:none;border:none;
+}
+
+input[type="text"],input[type="email"],input[type="number"], form .field textarea {
+    border: none;
+    background: #E8E9EA;
+    width: 100%;
+    margin: 0;
+    padding: 18px 0;
+    padding-left: 22%;
+    color: #313A3D;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+</style>
+{% endblock %}
+{% block body %}
+{% if status %}
+<script>
+	alert('{{status}}');
+</script>
+{% endif %}
+<div class="text-center">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.0561195236305!2d76.69247711463663!3d30.7168226934513!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fee5a42944be3%3A0xb713d3a3e26a89c1!2sSachTech+Solution+Pvt.+Ltd.!5e0!3m2!1sen!2sin!4v1558834443451!5m2!1sen!2sin" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>
+	<!-- Terms of use -->
+	<div class="contact main-grid-border">
+		<div class="container">
+			<h2 class="head text-center">Contact Us</h2>
+			<section id="hire">    
+				<form id="filldetails" method="post">
+					{% csrf_token %}
+					  <div class="field name-box">
+							<input type="text" id="name" placeholder="Who Are You?" name="name" required/>
+							<label for="name">Name</label>
+							<span class="ss-icon">checked</span>
+					  </div>
+					  
+					  <div class="field email-box">
+							<input type="email" id="email" placeholder="info@sachtechsolution.com" name="email" required/>
+							<label for="email">Email</label>
+							<span class="ss-icon">checked</span>
+					  </div>
+					  <div class="field phonenum-box">
+							<input type="number" id="email" min="1000000000" max="9999999999" placeholder="Phone Number" name="contact" required/>
+							<label for="email">Phone</label>
+							<span class="ss-icon">checked</span>
+					  </div>
+
+					  <div class="field msg-box">
+							<textarea id="msg" rows="4" placeholder="Your message goes here..." name="msg" required/></textarea>
+							<label for="msg">Your Msg</label>
+							<span class="ss-icon">checked</span>
+					  </div>
+					<div class="">
+					  <input class="submit" type="submit" value="Send" />
+					</div>
+			  </form>
+			</section>
+			<script>
+				  $('textarea').blur(function () {
+				$('#hire textarea').each(function () {
+					$this = $(this);
+					if (this.value != '') {
+						$this.addClass('focused');
+						$('textarea + label + span').css({ 'opacity': 1 });
+					} else {
+						$this.removeClass('focused');
+						$('textarea + label + span').css({ 'opacity': 0 });
+					}
+				});
+			});
+			$('#hire .field:first-child input').blur(function () {
+				$('#hire .field:first-child input').each(function () {
+					$this = $(this);
+					if (this.value != '') {
+						$this.addClass('focused');
+						$('.field:first-child input + label + span').css({ 'opacity': 1 });
+					} else {
+						$this.removeClass('focused');
+						$('.field:first-child input + label + span').css({ 'opacity': 0 });
+					}
+				});
+			});
+			$('#hire .field:nth-child(2) input').blur(function () {
+				$('#hire .field:nth-child(2) input').each(function () {
+					$this = $(this);
+					if (this.value != '') {
+						$this.addClass('focused');
+						$('.field:nth-child(2) input + label + span').css({ 'opacity': 1 });
+					} else {
+						$this.removeClass('focused');
+						$('.field:nth-child(2) input + label + span').css({ 'opacity': 0 });
+					}
+				});
+			});
+			$('#hire .field:nth-child(3) input').blur(function () {
+				$('#hire .field:nth-child(3) input').each(function () {
+					$this = $(this);
+					if (this.value != '') {
+						$this.addClass('focused');
+						$('.field:nth-child(3) input + label + span').css({ 'opacity': 1 });
+					} else {
+						$this.removeClass('focused');
+						$('.field:nth-child(3) input + label + span').css({ 'opacity': 0 });
+					}
+				});
+			});
+			$('#hire .field:nth-child(4) input').blur(function () {
+				$('#hire .field:nth-child(4) input').each(function () {
+					$this = $(this);
+					if (this.value != '') {
+						$this.addClass('focused');
+						$('.field:nth-child(4) input + label + span').css({ 'opacity': 1 });
+					} else {
+						$this.removeClass('focused');
+						$('.field:nth-child(4) input + label + span').css({ 'opacity': 0 });
+					}
+				});
+			});
+		  //@ sourceURL=pen.js
+		</script>    
+		<script>
+	  if (document.location.search.match(/type=embed/gi)) {
+		window.parent.postMessage("resize", "*");
+	  }
+	</script>
+		</div>	
+	</div>
+	<!-- // Terms of use -->
+{% endblock%}

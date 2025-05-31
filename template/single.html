@@ -1,0 +1,97 @@
+{% extends "base.html"%}
+{% load static %}
+{% block head%}
+<style>
+li img{
+	height:400px;width:400px !important;	
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class="banner text-center">
+	<div class="container">    
+		<h1>{{i.title}}</h1>
+	</div>
+</div>
+<!--single-page-->
+<div class="single-page main-grid-border">
+	<div class="container">
+		<ol class="breadcrumb" style="margin-bottom: 5px;">
+			<li><a href="{% url 'index'%}">Home</a></li>
+			<li><a href="{% url 'mysite:all-classifieds'%}">All Ads</a></li>
+			<li class="active"><a href="{% url 'mysite:categories'%}">{{product.cat}}</a></li>
+		</ol>
+		<div class="product-desc">
+			<div class="col-md-7 product-view">
+				<h2>{{pp.title}}</h2>
+				<p> <i class="glyphicon glyphicon-map-marker"></i><a href="#">{{product.city}}</a>| Added at {{product.time}}, Ad ID: {{product.id}}</p>
+				<div class="flexslider">
+					<ul class="slides">
+						<li data-thumb="/media/{{product.img1}}">
+							<img src="/media/{{product.img1}}" />
+						</li>
+						<li data-thumb="/media/{{product.img2}}">
+							<img src="/media/{{product.img2}}" />
+						</li>
+						<li data-thumb="/media/{{product.img3}}">
+							<img src="/media/{{product.img3}}" />
+						</li>
+						<li data-thumb="/media/{{product.img4}}">
+							<img src="/media/{{product.img4}}" />
+						</li>
+					</ul>
+				</div>
+				<!-- FlexSlider -->
+					<script defer src="{% static 'js/jquery.flexslider.js'%}"></script>
+				<link rel="stylesheet" href="{% static 'css/flexslider.css'%}" type="text/css" media="screen" />
+
+					<script>
+				// Can also be used with $(document).ready()
+				$(window).load(function() {
+					$('.flexslider').flexslider({
+					animation: "slide",
+					controlNav: "thumbnails"
+					});
+				});
+				</script>
+				<!-- //FlexSlider -->
+				<div class="product-details">
+					<h4>Category : <a href="#">{{product.cat}}</a></h4>
+					<h4>Views : <strong>{{product.views}}</strong></h4>
+					<p><strong>title </strong>: {{product.title}}</p>
+					<p><strong>Summary</strong> : 
+					{% for i in product.desc %}
+						{{i}}
+					{% endfor %}
+					</p>
+				</div>
+			</div>
+			<div class="col-md-5 product-details-grid">
+				<div class="item-price">
+					<div class="product-price">
+						<p class="p-price">Price</p>
+						<h3 class="rate">&#8377;{{product.price}}</h3>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="interested text-center">
+					<h4>Interested in Buying this Product?
+						<small> Contact the Seller!</small></h4>
+					<img src="/media/{{product.user.profile_pic}}" style="height:100px;width:100px;border-radius:50%" alt="">
+					<p>{{product.user.user.first_name}}</p>
+					<p><i class="glyphicon glyphicon-earphone"></i>{{product.user.contact}}</p>
+				</div>
+					<div class="tips">
+					<h4>Here are product details</h4>
+						<ol>
+							{% for i in product.desc%}
+							<li><a href="#">{{i}}.</a></li>
+							{% endfor %}
+						</ol>
+					</div>
+			</div>
+		<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+{% endblock %}

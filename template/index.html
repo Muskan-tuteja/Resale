@@ -1,0 +1,115 @@
+{% extends "base.html"%}
+{% load static %}
+{% block body %}
+<div class="main-banner banner text-center">
+	<div class="container">    
+		<h1>Sell or Advertise   <span class="segment-heading">    anything online </span> with ReSale</h1>
+		<p>Here are all products of your choice</p>
+		{% if user.is_authenticated %}
+		<a href="{% url 'mysite:post_add'%}">Post Free Ad</a>
+		{% else %}
+		<a href="{% url 'mysite:signin'%}?st=login">Post Free Ad</a>
+		{% endif %}
+	</div>
+</div>
+	<!-- content-starts-here -->
+	<div class="content">
+			<div class="categories">
+					<div class="container">
+						<script>
+						let c=0;
+						</script>
+							{% for i in cat %}
+							<div class="col-md-2 focus-grid">
+									<a class="c{{i.id}}">
+											<div class="focus-border">
+													<div class="focus-layout">
+															<div class="focus-image"><i class="{{i.icon}}" style="background:{{i.color}}"></i></div>
+															<h4 class="clrchg">{{i.category_name}}</h4>
+													</div>
+											</div>
+									</a>
+							</div>
+							<script>
+							$(function(){
+								c++;
+								$('.c{{i.id}}').attr('href','{% url "mysite:categories"%}#parentVerticalTab'+c);
+							})
+							</script>
+							{% endfor %}
+							<div class="clearfix"></div>
+					</div>
+			</div>
+			<div class="trending-ads">
+		<div class="container">
+		<!-- slider -->
+		<div class="trend-ads">
+			<h2>Featured Ads</h2>
+				<ul id="flexiselDemo3">
+					<li>
+						{% for i in recents %}
+							<div class="col-md-3 biseller-column">
+								<a href="{% url 'mysite:single_product'%}?id={{i.id}}">
+										<img src="/media/{{i.img1}}" style="height:170px;"/>
+										<!-- <img src="/media/register/2025/04/08/new_latest3.png" alt=""> -->
+										<span class="price">&#8377;{{i.price}}</span>
+								</a> 
+								<div class="ad-info">
+										<h5>{{i.title}}</h5>
+										<span>{{i.on_date}}</span>
+										<!-- <small>{{i.on_time}}</small> -->
+								</div>
+							</div>
+						{% endfor %}
+					</li>
+					<li>
+					{% for i in first %}
+						<div class="col-md-3 biseller-column">
+							<a href="{% url 'mysite:single_product'%}?id={{i.id}}">
+								<img src="/media/{{i.img1}}" style="height:170px;"/>
+								<span class="price">&#8377;{{i.price}}</span>
+							</a> 
+							<div class="ad-info">
+								<h5>{{i.title}}</h5>
+								<span>{{i.on_date}}</span><br/>
+								<!-- <small>{{i.on_time}}</small> -->
+							</div>
+						</div>
+					{% endfor %}
+					</li>
+				</ul>
+				<script type="text/javascript">
+								$(window).load(function() {
+								$("#flexiselDemo3").flexisel({
+										visibleItems:1,
+										animationSpeed: 1000,
+										autoPlay: true,
+										autoPlaySpeed: 5000,    		
+										pauseOnHover: true,
+										enableResponsiveBreakpoints: true,
+										responsiveBreakpoints: { 
+												portrait: { 
+														changePoint:480,
+														visibleItems:1
+												}, 
+												landscape: { 
+														changePoint:640,
+														visibleItems:1
+												},
+												tablet: { 
+														changePoint:768,
+														visibleItems:1
+												}
+										}
+								});
+								
+						});
+						</script>
+						<script type="text/javascript" src="{% static 'js/jquery.flexisel.js'%}"></script>
+				</div>   
+			</div>
+			<!-- //slider -->				
+			</div>
+			
+	</div>
+{% endblock %}

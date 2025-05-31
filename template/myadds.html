@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="banner text-center">
+    <div class="container"> 
+        <h1>{{user.first_name}}  <span class="segment-heading"> || My Account </span></h1>
+        <!-- <img src="{{ user.profile.profile_pic.url }}" alt="Profile Pic" > -->
+
+        <p>{{user.email}}</p>
+        <a href="{% url 'mysite:post_add'%}">Post Free Ad</a>
+    </div>
+</div>
+<!-- Products -->
+<div class="total-ads main-grid-border">
+    <div class="container">
+        <div class="all-categories">
+            <h3> Select your category and find the perfect ad</h3>
+            <ul class="all-cat-list">
+                <script>
+                let c=0;
+                </script>
+                {% for i in cat %}
+                <li><a class="c{{i.id}}">{{i.category_name}} <span class="num-of-ads{{i.id}}">(5,78,076)</span></a></li>
+                <script>
+                        $(function(){
+                        c++;
+                        $('.c{{i.id}}').attr('href','{% url "mysite:categories"%}#parentVerticalTab'+c);
+                        $.ajax({
+                            url:'{% url "mysite:products" %}',
+                            type:'get',
+                            data:{name:'{{i.category_name}}'},
+                            success:function(data){
+                                $('.num-of-ads{{i.id}}').html('('+data+')')
+                            }
+
+                        })
+                    })
+                    </script>
+                {% endfor %}
+            </ul>
+        </div>
+        <ol class="breadcrumb" style="margin-bottom: 5px;">
+            <li><a href="{% url 'index'%}">Home</a></li>
+            <li class="active">My Ads</li>
+        </ol>
+        <div class="ads-grid">
+           
+            <div class="ads-display col-md-12">
+                <div class="wrapper">					
+                <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+                        <span class="text">My Ads</span>
+                        </a>
+                    </li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                        <div>
+                                            <div id="container">
+                            <div class="view-controls-list" id="viewcontrols">
+                                <label>view :</label>
+                                <a class="gridview"><i class="glyphicon glyphicon-th"></i></a>
+                                <a class="listview active"><i class="glyphicon glyphicon-th-list"></i></a>
+                            </div>
+
+                            <div class="clearfix"></div>
+                        <ul class="list">
+                            <h2>Total Results: {{total}}</h2>
+                            {% for i in adds %}
+                            <a href="{% url 'mysite:single_product'%}?id={{i.id}}">
+                                <li>
+                                <img src="/media/{{i.img1}}" title="" alt="" />
+                                <section class="list-left">
+                                <h5 class="title">{{i.title}}</h5>
+                                <span class="adprice">&#8377; {{i.price}}</span>
+                                <p class="catpath">Home » {{i.category_name}}</p>
+                                </section>
+                                <section class="list-right">
+                                <span class="date">{{i.on_date}},</span>
+                                <span class="cityname">{{i.city}}</span>
+                                <div class="submit">
+                                    <a href="{% url 'mysite:delete_add'%}?id={{i.id}}" class="btn btn-danger">Delete Add</a>
+                                </div>
+                                </section>
+                                <div class="clearfix"></div>
+                                </li> 
+                            </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                        </div>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>	
+</div>
+	<!-- // Products -->
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "base.html"%}
+{% load static %}
+{% block head %}
+<style>
+	.abcd input[type="number"]{
+		outline: none;
+		border: 1px solid #BEBEBE;
+		background: none;
+		font-size: 15px;
+		padding: 10px 10px;
+		width: 100%;
+		margin: 1em 0;
+	
+}
+</style>
+{% endblock %}
+{% block body %}
+<section>
+	<form action="" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div id="page-wrapper" class="sign-in-wrapper">
+			<div class="graphs">
+				<div class="sign-up">
+					<h1>Create an account</h1>
+					<p class="creating">Create your account here. By creating account, you will able to post your own
+						advertisements.
+					</p>
+					<span class="helptext"></span>
+					<div class="sign-u">
+						<div class="sign-up1">
+							<h4>Choose Profile* :</h4>
+						</div>
+						<div class="sign-up2">
+							<input type="file" placeholder=" " name="profile_pic" class="form-control" style="margin-top:5%;" required/>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="sign-u">
+						<div class="sign-up1">
+							<h4>Full Name* :</h4>
+						</div>
+						<div class="sign-up2">
+							<input type="text" placeholder=" " name="name" pattern="[A-Za-z\s]+" title="Only Characters and spacec allowed" required/>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="sign-u">
+						<div class="sign-up1">
+							<h4>Email Address* :</h4>
+						</div>
+						<div class="sign-up2">
+							<input type="text" placeholder=" " required name="email" id="username"/>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="sign-u">
+						<div class="sign-up1">
+							<h4>Password* :</h4>
+						</div>
+						<div class="sign-up2">
+							<input type="password" placeholder=" " required name="password" id="p" onkeyup="checkpass()"/>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="sign-u">
+						<div class="sign-up1">
+							<h4>Confirm Password* :</h4>
+						</div>
+						<div class="sign-up2">
+							<input type="password" placeholder=" " id="cp" onkeyup="checkpass()"  required/>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="sign-u">
+						<div class="sign-up1">
+							<h4>Contact<br/> Number* :</h4>
+						</div>
+						<div class="sign-up2 abcd">
+							<input type="number" placeholder=" " name="contact"  required/>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					
+					<div class="sub_home">
+						<div class="sub_home_left">
+							<input type="submit" value="Create" id="submit">
+						</div>
+						<div class="sub_home_right">
+							<p>Go Back to <a href="{% url 'index'%}">Home</a></p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!--footer section start-->
+		<footer class="diff">
+			<p class="text-center">&copy 2025 Recycling Web. All Rights Reserved | Design by <a href="" target="_blank">Project Team</a></p>
+		</footer>
+	<!--footer section end-->
+	</form>
+</section>
+<script>		
+$(function(){
+	$('#username').keyup(function(){
+		var user = $('#username').val();
+		$.ajax({
+			url:'{% url "mysite:uservalid" %}',
+			type:'get',
+			data:{username:user},
+			success:function(data){
+				if(data=='Success'){
+					$('#username').css({border:'1px solid green'});
+					$('#signup').removeAttr('disabled');
+					$('.helptext').html(' ').removeClass('text-danger');
+
+				}
+				else{
+					$('#username').css({border:'1px solid red'});
+					$('#signup').attr('disabled','disabled');
+					$('.helptext').html('&times;'+data).addClass('alert alert-danger');
+
+				}
+			}
+		})
+	});
+});
+</script>
+<script>
+function checkpass(){
+	let p=$('#p').val();
+	let cp=$('#cp').val();
+	if(p==cp){
+	$('#p').css('border','1px solid green');
+	$('#cp').css('border','1px solid green');
+	$('#submit').removeAttr('disabled');
+	$('#msz1').html('\n ');
+	}else{
+	$('#p').css('border','1px solid red');
+	$('#cp').css('border','1px solid red');
+	$('#submit').attr('disabled','disabled');
+	$('#msz1').html('Password Does Not Match ').addClass('text-danger');
+	}
+}
+</script>
+{% if status %}
+<script>
+	alert('{{status}}');
+	window.location = '/mysite/signin/';
+</script>
+{% endif %}
+{% endblock %}
